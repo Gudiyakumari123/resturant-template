@@ -1,0 +1,64 @@
+.p-photo{
+
+  
+    input[type="file"] {
+      display: none;
+    }
+    
+    .custom-file-upload {
+      display: inline-block;
+      position: relative;
+      padding: 6px;
+      cursor: pointer;
+      repeat:none;
+      width: 170px;
+      background: fit-content;
+      background-repeat: no-repeat;
+      // background: white;
+      background: #f8f9fe;
+  
+  
+    
+    }
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      word-wrap: break-word;
+      background-color: #fff;
+      border-radius: 0.25rem;
+      border: none;
+  }
+    
+    .img-wrap{
+      position: relative;
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+    }
+    .img-upload:before{
+      content: "\f093";
+      font-size: 80px;
+      position: absolute;
+      padding-top: 80px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #ffefea;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      opacity: 0;
+      transition: .5s ease;
+      background-color: #ffefea;
+    }
+    .img-upload:hover:before{
+  //    opacity: 1;
+    }
+    img {
+      width: auto;
+      height: 100%;
+    }
+    
+    }
