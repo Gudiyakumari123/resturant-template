@@ -139,8 +139,8 @@ const UserType = () => {
     }, [search, contactList]);
 
     const saveUser = () => {
-        if (!params.name) {
-            showMessage('Name is required.', 'error');
+        if (!params. user_type) {
+            showMessage(' user_type is required.', 'error');
             return true;
         }
 
@@ -152,18 +152,17 @@ const UserType = () => {
         if (params.id) {
             //update user
             let user: any = filteredItems.find((d: any) => d.id === params.id);
-            user.name = params.name;
+            user.user_type = params. user_type;
 
-            user.role = params.role;
-            user.location = params.location;
+            user.role = params.permissions;
         } else {
             //add user
             let maxUserId = filteredItems.length ? filteredItems.reduce((max: any, character: any) => (character.id > max ? character.id : max), filteredItems[0].id) : 0;
 
             let user = {
                 id: maxUserId + 1,
-                name: params.name,
-                role: params.role,
+                user_type: params. user_type,
+                permissions: params.permissions,
             };
             filteredItems.splice(0, 0, user);
             //   searchContacts();

@@ -6,6 +6,8 @@ const Login = lazy(() => import('../auth/Login'));
 const ForgotPassword = lazy(() => import('../auth/ForgotPassword'));
 const OtpValidate = lazy(() => import('../auth/otpValidate'));
 const ResetPassword = lazy(() => import('../auth/ResetPassword'));
+const ForgotTry = lazy(() => import('../auth/ForgotTry.jsx'));
+
 
 // ResturantMain Pages 
 
@@ -57,7 +59,12 @@ const routes = [
         element: <Login />,
         layout: 'blank',
     },
-
+    {
+        path: '/forgotTry',
+        element: <ForgotTry />,
+        layout: 'blank',
+    },
+    
     {
         path: '/forgot-password',
         element: <ForgotPassword />,

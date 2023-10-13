@@ -2,13 +2,73 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setPageTitle, toggleRTL } from '../store/themeConfigSlice';
-import Dropdown from '../components/Dropdown';
 import { IRootState } from '../store';
 import i18next from 'i18next';
 import IconCaretDown from '../components/Icon/IconCaretDown';
 import IconMail from '../components/Icon/IconMail';
+import { object, string, TypeOf } from "zod";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+// import FormInput from "../components/FormInput";
+// import { LoadingButton } from "../components/LoadingButton";
+import { toast } from "react-toastify";
+import useStore from "../store";
+import { authApi } from "../auth/authApi/AuthApi";
+import { GenericResponse } from "../auth/authApi/types";
 
-const ResetPassword = () => {
+const forgotPasswordchema = object({
+  email: string().min(1, "Email is required").email("Invalid email address"),
+});
+
+export type ForgotPasswordInput = TypeOf<typeof forgotPasswordchema>;
+const ForgotPassword = () => {
+    const store = useStore;
+
+  const methods = useForm<ForgotPasswordInput>({
+    resolver: zodResolver(forgotPasswordchema),
+  });
+
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = methods;
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
+
+  const forgotPassword = async (data: ForgotPasswordInput) => {
+    try {
+    //   store.setRequestLoading(true);
+      const response = await authApi.post<GenericResponse>(
+        `auth/forgotpassword`,
+        data
+      );
+    //   store.setRequestLoading(false);
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+    } catch (error: any) {
+    //   store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
+  };
+
+  const onSubmitHandler: SubmitHandler<ForgotPasswordInput> = (values) => {
+    forgotPassword(values);
+  };
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Recover Id Box'));
@@ -57,52 +117,14 @@ const ResetPassword = () => {
                             <Link to="/" className="w-8 block lg:hidden">
                                 <img src="/assets/images/logo.svg" alt="Logo" className="mx-auto w-10" />
                             </Link>
-                            <div className="dropdown ms-auto w-max">
-                                <Dropdown
-                                    offset={[0, 8]}
-                                    placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                                    btnClassName="flex items-center gap-2.5 rounded-lg border border-white-dark/30 bg-white px-2 py-1.5 text-white-dark hover:border-primary hover:text-primary dark:bg-black"
-                                    button={
-                                        <>
-                                            <div>
-                                                <img src={`/assets/images/flags/${flag.toUpperCase()}.svg`} alt="image" className="h-5 w-5 rounded-full object-cover" />
-                                            </div>
-                                            <div className="text-base font-bold uppercase">{flag}</div>
-                                            <span className="shrink-0">
-                                                <IconCaretDown />
-                                            </span>
-                                        </>
-                                    }
-                                >
-                                    <ul className="!px-2 text-dark dark:text-white-dark grid grid-cols-2 gap-2 font-semibold dark:text-white-light/90 w-[280px]">
-                                        {themeConfig.languageList.map((item: any) => {
-                                            return (
-                                                <li key={item.code}>
-                                                    <button
-                                                        type="button"
-                                                        className={`flex w-full hover:text-primary rounded-lg ${flag === item.code ? 'bg-primary/10 text-primary' : ''}`}
-                                                        onClick={() => {
-                                                            i18next.changeLanguage(item.code);
-                                                            // setFlag(item.code);
-                                                            setLocale(item.code);
-                                                        }}
-                                                    >
-                                                        <img src={`/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="w-5 h-5 object-cover rounded-full" />
-                                                        <span className="ltr:ml-3 rtl:mr-3">{item.name}</span>
-                                                    </button>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </Dropdown>
-                            </div>
+                          
                         </div>
                         <div className="w-full max-w-[440px] lg:mt-16">
                             <div className="mb-7">
                                 <h1 className="mb-3 text-2xl font-bold !leading-snug dark:text-white">Forgot Password </h1>
                                 <p>Enter your email to recover your ID</p>
                             </div>
-                            <form className="space-y-5" onSubmit={submitForm}>
+                            <form className="space-y-5"  onSubmit={handleSubmit(onSubmitHandler)}>
                                 <div>
                                     <label htmlFor="Email">Email</label>
                                     <div className="relative text-white-dark">
@@ -112,11 +134,12 @@ const ResetPassword = () => {
                                         </span>
                                     </div>
                                 </div>
-                                <Link to="/otp">
+                                {/* <Link to="/otp"> */}
                                 <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500">
                                     RECOVER
                                 </button>
-                                </Link>
+                                
+                                {/* </Link> */}
                             </form>
                         </div>
                         <p className="absolute bottom-6 w-full text-center dark:text-white">© {new Date().getFullYear()}.Sourcefile Solution All Rights Reserved.</p>
@@ -127,4 +150,4 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default ForgotPassword;

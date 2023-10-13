@@ -87,12 +87,13 @@ const LoginCover = () => {
                 <img src="/assets/images/auth/coming-soon-object2.png" alt="image" className="absolute left-24 top-0 h-40 md:left-[30%]" />
                 <img src="/assets/images/auth/coming-soon-object3.png" alt="image" className="absolute right-0 top-0 h-[300px]" />
                 <img src="/assets/images/auth/polygon-object.svg" alt="image" className="absolute bottom-0 end-[28%]" />
+
                 <div className="relative flex w-full max-w-[1502px] flex-col justify-between overflow-hidden rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 lg:min-h-[758px] lg:flex-row lg:gap-10 xl:gap-0">
                     <div className="relative hidden w-full items-center justify-center bg-[linear-gradient(225deg,rgba(239,18,98,1)_0%,rgba(67,97,238,1)_100%)] p-5 lg:inline-flex lg:max-w-[835px] xl:-ms-28 ltr:xl:skew-x-[14deg] rtl:xl:skew-x-[-14deg]">
                         <div className="absolute inset-y-0 w-8 from-primary/10 via-transparent to-transparent ltr:-right-10 ltr:bg-gradient-to-r rtl:-left-10 rtl:bg-gradient-to-l xl:w-16 ltr:xl:-right-20 rtl:xl:-left-20"></div>
                         <div className="ltr:xl:-skew-x-[14deg] rtl:xl:skew-x-[14deg]">
                             <Link to="/" className="w-48 block lg:w-72 ms-10">
-                                <img src="/assets/images/auth/logo-white.svg" alt="Logo" className="w-full" />
+                                <img src="http://sourcefilesolutions.com/assets/images/logonew.png" alt="Logo" className="w-full" />
                             </Link>
                             <div className="mt-24 hidden w-full max-w-[430px] lg:block">
                                 <img src="/assets/images/auth/login.svg" alt="Cover Image" className="w-full" />
@@ -146,13 +147,16 @@ const LoginCover = () => {
                                 <div>
                                     <label className="flex cursor-pointer items-center">
                                         <Link to="/forgot-password">
-                                        <span className="text-white-dark">Forgot Password</span>
+                                            <span className="text-white-dark">Forgot Password</span>
                                         </Link>
                                     </label>
                                 </div>
-                               
-                                <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500">
-                                Sign in
+
+                                <button
+                                    type="submit"
+                                    className="btn text-white btn-gradient !mt-6 w-full border-0 uppercase bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500"
+                                >
+                                    Sign in
                                 </button>
                             </form>
 
@@ -200,7 +204,6 @@ const LoginCover = () => {
                                     </li>
                                 </ul>
                             </div>
-                            
                         </div>
                         <p className="absolute bottom-6 w-full text-center dark:text-white">© {new Date().getFullYear()}.Sourcefile Solutions All Rights Reserved.</p>
                     </div>
